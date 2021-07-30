@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">   
+    <title>Playboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Montez|Lobster|Josefin+Sans|Shadows+Into+Light|Pacifico|Amatic+SC:700|Orbitron:400,900|Rokkitt|Righteous|Dancing+Script:700|Bangers|Chewy|Sigmar+One|Architects+Daughter|Abril+Fatface|Covered+By+Your+Grace|Kaushan+Script|Gloria+Hallelujah|Satisfy|Lobster+Two:700|Comfortaa:700|Cinzel|Courgette' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main2.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+
+   
+</style>
+</head>
+<body class="body-bg" th:styleappend="'background-color:'+${background}">
+	<nav class="navbar navbar-custom bg-light navbar-expand-sm">
+	    <div class="container">
+	        <a href="/" class="navbar-brand">
+	            <img th:src="@{/img/playboard-logo.png}" alt="Playboard Logo">
+	        </a>
+	   		<div class="collapse navbar-collapse" id="idNav">
+	            <ul class="navbar-nav ml-auto">
+	                <li class="nav-item"><a th:href="@{/step}" class="nav-link">How It Works</a></li>
+	                <li class="nav-item"><a th:href="@{/about}" class="nav-link">About</a></li>
+	                <li class="nav-item"><a th:href="@{/contact}" class="nav-link">Contact</a></li>
+	            </ul>
+	        </div>
+	        <div class="row">
+	            <div class="col-md">
+	                <div class="d-flex justify-content-end">
+	                    <div id="navigation_buttom">
+	                    	<a class="btn btn-outline-primary my-2 my-sm-0 nav-btn" th:href="@{/board/upload}" role="button">Add Image</a>
+	                    	<a class="btn btn-outline-primary my-2 my-sm-0 nav-btn" th:href="@{/board/post}" role="button">Add YouTube Video</a>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</nav>
+	
+	<div class="justify-content-center board-title" th:styleappend="'background-image:url('+${'files/'+titlename}+'); background-size:cover'">
+		
+    	<div class="demo-content text-center mt-5" style="display: flex; justify-content: center;"><h1 class="display-4" th:styleappend="'display:flex; font-family:'+${titlefont}+'; color:'+${titlecolor}"><div th:if="${emoji1.contains('&')}">&#[[${emoji1.split('#')[1].split(';')[0]}]];</div>[[${title}]]<div th:if="${emoji2.contains('&')}">&#[[${emoji2.split('#')[1].split(';')[0]}]];</div></h1></div>
+    </div>	
+
+		<div class="bs-example">
+		    <div class="container">
+		        <div class="row">
+		            <div class="card-columns" style="width: 100%; display: flex; flex-wrap: wrap;">
+		                <div class="card" th:each="file:${files}">
+		                
+		                    <div th:if="${file.type.contains('image')}" onclick="function handleClick() {console.log('clicked');} handleClick()" class="image">
+		                    	<a th:href="@{/detailPage/{id}(id=${file.id})}">
+									<img th:src="${'/files/'+file.name}" class="card-img-top image-content" alt="...">
+								</a>
+		                    </div>
+							<div th:if="${file.type.contains('link')}">
+			                    
+			                </div>
+		                    <div th:if="${file.type.contains('link')}" onclick="function handleClick() {} handleClick()" class="image">
+		                    	<iframe th:src="${file.name}" class="card-img-top"></iframe>
+			                </div>
+		                    <div class="card-body" style="height: 40%;">
+		                        <h5 class="card-title"></h5>
+		                      	<div class="card-container" style="height:33%">
+								<a th:if="${file.type.contains('link')}" th:href="@{/detailPage/{id}(id=${file.id})}">
+		                        	<p class="card-text" th:text="${file.description}" style="height: 100%;"></p>
+								</a>
+								<p th:if="${file.type.contains('image')}" class="card-text" th:text="${file.description}" style="height: 100%;"></p>
+		                        </div>
+		                        
+		                        <p class="card-text text-right" style="height: fit-content;">Added by [[${file.owner}]]</p>
+		                        <p class="card-text text-right" ><small class="text-muted">[[${file.date}]], [[${file.numComment}]] comments</small></p>
+		                    	<div class="text-right" >
+				                	<a class="btn btn-outline-dark" th:href="@{/files/delete/{id}(id=${file.id})}"><i class="fa fa-trash-o"></i></a>
+				                </div>             
+		                    
+                  		</div>                   
+		                </div>     
+		            </div>
+		        </div>
+		    </div>
+		</div>	
+
+	<footer class="footer container-fluid bg-primary text-light">
+	    <div class="container text-center">  
+	        <div class="row text-muted justify-content-center">
+	            <div class="col-2 mt-2"><a th:href="@{/step}" class="text-white">How It Works</a></div>
+	            <div class="col-2 mt-2"><a th:href="@{/about}" class="text-white">About</a></div>
+	            <div class="col-2 mt-2"><a th:href="@{/contact}" class="text-white">Contact</a></div>	            
+	        </div>
+	        <div class="row">
+	            <div class="co-md-8 mx-auto mt-2">
+	                <p class="text-white text-center">&copy; 2021 Playboard. All rights reserved</p>
+	                <ul class="list-inline text-center">
+	                    <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-youtube-square fa-inverse" aria-hidden="true"></i></a></li>
+	                    <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-twitter-square fa-inverse" aria-hidden="true"></i></a></li>
+	                    <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-facebook-square fa-inverse" aria-hidden="true"></i></a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </div>  
+	</footer>
+</body>
+</html>

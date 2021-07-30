@@ -1,0 +1,50 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+   <meta charset="ISO-8859-1">
+   <title>Playboard</title>
+   <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+   <!-- https://cdnjs.com/libraries/sockjs-client -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+   <!-- https://cdnjs.com/libraries/stomp.js/ -->
+   <script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+</head>
+<body class="body-rt">
+<h2 class="text-custom-rt mt-3 ml-3">Playboard</h2>
+
+<div id="chat-container">
+   <div class="chat-header">
+      <div class="user-container">
+         <span class="label-rt mr-2" id="username" th:utext="${username}"></span>
+         <a class="custom-tr-rt" th:href="@{/chat_logout}">Logout</a>
+      </div>
+      <h3>Chat Box</h3>
+   </div>
+
+   <hr/>
+
+   <div id="connecting">Connecting...</div>
+   <ul id="messageArea">
+   </ul>
+   <form id="messageForm" name="messageForm">
+      <div class="input-message message-rt">
+         <input class="col-8" type="text" id="message" autocomplete="off"
+                placeholder="Type a message..."/>
+         <button class="btn btn-success send-btn-rt ml-4" type="submit">Send</button>
+      </div>
+   </form>
+</div>
+
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+<script th:inline="javascript">
+   var id = /*[[${id}]]*/ '';
+</script>
+</html>
